@@ -47,8 +47,8 @@ class Main extends Activity {
     h2.sendDelayed(10000, "Delayed send to UI")
 
     log("Exiting onCreate method")
-
   }
+
 }
 
 object Main {

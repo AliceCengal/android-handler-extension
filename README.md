@@ -5,17 +5,30 @@ Handler Extension
 This package provides some functions and method to reduce the code needed to post, send, and
 process Messages using the Handler class provided by the Android framework.
 
+Usage
+-----
+
+Add the trait `HandlerExtensionPackage` to the package object to enable extension for the whole
+package. Use the functions defined in `HandlerExtensionPackage` to create Handlers with a
+`PartialFunction`. The extension methods defined in `HandlerExt` can be defined both on the
+Handlers returned by the function in `HandlerExtensionPackage` as well any other Handler created
+through normal means.
+
 Sample
 ------
 
 ```scala
+log("Starting onCreate method")
+
 val thread = new HandlerThread("Background thread")
 thread.start()
 
+// A Handler that processes messages on Background thread
 val h1 = handler(thread.getLooper) {
   case s: String => log(s"Message received on Background: $s")
 }
 
+// A Handler that processes messages on UI thread
 val h2 = uiHandler {
   case s: String => log(s"Message received on UI: $s")
 }
@@ -41,6 +54,8 @@ h1.sendDelayed(10000, "Delayed send to Background")
 
 h2.send("Ordinary send to UI")
 h2.sendDelayed(10000, "Delayed send to UI")
+
+log("Exiting onCreate method")
 ```
 
 The code above produces this output:

@@ -8,7 +8,7 @@ process Messages using the Handler class provided by the Android framework.
 Usage
 -----
 
-Add the trait `HandlerExtensionPackage` to the package object to enable extension for the whole
+Add the trait `HandlerExtensionPackage` to a package object to enable extension for the whole
 package. Use the functions defined in `HandlerExtensionPackage` to create Handlers with a
 `PartialFunction`. The extension methods defined in `HandlerExt` can be defined both on the
 Handlers returned by the function in `HandlerExtensionPackage` as well any other Handler created

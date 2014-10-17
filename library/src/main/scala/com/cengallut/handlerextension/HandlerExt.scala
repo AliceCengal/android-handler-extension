@@ -1,6 +1,7 @@
 package com.cengallut.handlerextension
 
 import android.os.{Handler, Looper, Message}
+import HandlerExtensionPackage.Respond
 
 /**
  * Add this trait to the package object or Activity to enable Handler extension.
@@ -16,7 +17,7 @@ trait HandlerExtensionPackage {
    * @return A Handler that will execute the partial function for
    *         every messages received.
    */
-  def handler()(pf: PartialFunction[AnyRef, Unit]): Handler =
+  def handler()(pf: Respond): Handler with HandlerExt =
     new PartialFuncHandler(pf)
 
   /**
@@ -29,7 +30,7 @@ trait HandlerExtensionPackage {
    * @return A Handler that will execute the partial function for
    *         every messages received.
    */
-  def handler(looper: Looper)(pf: PartialFunction[AnyRef, Unit]): Handler =
+  def handler(looper: Looper)(pf: Respond): Handler with HandlerExt =
     new PartialFuncLooperHandler(pf, looper)
 
   /**
@@ -42,9 +43,10 @@ trait HandlerExtensionPackage {
     new HandlerShell(h)
 
   /**
-   * @return A normal that runs on the main UI thread.
+   * @return A normal Handler that runs on the main UI thread.
    */
-  def uiHandler = new Handler(Looper.getMainLooper)
+  def uiHandler: Handler with HandlerExt =
+    new LooperHandler(Looper.getMainLooper)
 
   /**
    * Same as `handler(pf)` except that the Handler returned runs on
@@ -54,8 +56,14 @@ trait HandlerExtensionPackage {
    * @return A Handler that will execute the partial function for
    *         every messages received.
    */
-  def uiHandler(pf: PartialFunction[AnyRef, Unit]): Handler =
+  def uiHandler(pf: Respond): Handler with HandlerExt =
     new PartialFuncLooperHandler(pf, Looper.getMainLooper)
+
+}
+
+object HandlerExtensionPackage extends HandlerExtensionPackage {
+
+  type Respond = PartialFunction[AnyRef, Unit]
 
 }
 
@@ -84,13 +92,16 @@ trait HandlerExt {
 
 }
 
-private[handlerextension] class HandlerShell(h: Handler) extends HandlerExt {
+
+private[handlerextension]
+final class HandlerShell(h: Handler) extends HandlerExt {
 
   def basis = h
 
 }
 
-private[handlerextension] class PartialFuncHandler(pf: PartialFunction[AnyRef, Unit])
+private[handlerextension]
+final class PartialFuncHandler(pf: Respond)
   extends Handler with HandlerExt {
 
   override def basis = this
@@ -101,9 +112,9 @@ private[handlerextension] class PartialFuncHandler(pf: PartialFunction[AnyRef, U
 
 }
 
-private[handlerextension] class PartialFuncLooperHandler(pf: PartialFunction[AnyRef, Unit],
-                                                         looper: Looper)
-  extends Handler(looper) with HandlerExt {
+private[handlerextension]
+final class PartialFuncLooperHandler(pf: Respond, looper: Looper)
+    extends Handler(looper) with HandlerExt {
 
   override def basis: Handler = this
 
@@ -113,6 +124,19 @@ private[handlerextension] class PartialFuncLooperHandler(pf: PartialFunction[Any
 
 }
 
-private[handlerextension] class ClosureRunnable(closure: => Unit) extends Runnable {
-  override def run(): Unit = closure
+private[handlerextension]
+final class LooperHandler(looper: Looper)
+    extends Handler(looper) with HandlerExt {
+
+  override private[handlerextension] def basis: Handler = this
+
 }
+
+private[handlerextension]
+final class ClosureRunnable(closure: => Unit) extends Runnable {
+
+  override def run(): Unit = closure
+
+}
+
+

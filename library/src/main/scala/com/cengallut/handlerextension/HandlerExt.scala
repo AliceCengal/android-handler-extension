@@ -61,6 +61,9 @@ trait HandlerExtensionPackage {
 
 }
 
+/**
+ * You can also do `import HandlerExtensionPackage._` to get the extension in a small scope.
+ */
 object HandlerExtensionPackage extends HandlerExtensionPackage {
 
   type Respond = PartialFunction[AnyRef, Unit]

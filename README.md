@@ -73,6 +73,10 @@ I/HandlerExtensionMain(17862): Message received on UI: Delayed send to UI
 I/HandlerExtensionMain(17862): Message received on Background: Delayed send to Background
 ```
 
+### Initialization in traits that extends Activity
+
+
+
 Installation
 ------------
 

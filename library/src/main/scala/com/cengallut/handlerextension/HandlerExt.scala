@@ -21,7 +21,7 @@ trait HandlerExtensionPackage {
     new PartialFuncHandler(pf)
 
   /**
-   * Same as `handler(pf)` except that the HAndler will process the
+   * Same as `handler(pf)` except that the Handler will process the
    * message on the thread associated with the given looper.
    *
    * @param looper Looper of the thread where the Handler will process
@@ -62,7 +62,8 @@ trait HandlerExtensionPackage {
 }
 
 /**
- * You can also do `import HandlerExtensionPackage._` to get the extension in a small scope.
+ * You can also do `import HandlerExtensionPackage._` to get the extension 
+ * in a small scope.
  */
 object HandlerExtensionPackage extends HandlerExtensionPackage {
 

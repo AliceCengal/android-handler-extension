@@ -73,10 +73,6 @@ I/HandlerExtensionMain(17862): Message received on UI: Delayed send to UI
 I/HandlerExtensionMain(17862): Message received on Background: Delayed send to Background
 ```
 
-### Initialization in traits that extends Activity
-
-
-
 Installation
 ------------
 
@@ -94,3 +90,22 @@ dependencies {
     // Other dependencies
 }
 ```
+
+#### UPDATE 2014/12/18
+
+The library is now hosted on Github. To include in your project, add the Github repository to your dependencies. 
+
+```Groovy
+repositories {
+    maven {
+        url 'https://github.com/AliceCengal/android-handler-extension/raw/master/library/release'
+    }
+}
+
+dependencies {
+    // Other dependencies
+    // ...
+    compile 'com.cengallut:handlerextension:1.1.0'
+}
+```
+

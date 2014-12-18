@@ -12,13 +12,6 @@ android {
         versionCode 1
         versionName "1.0"
     }
-    sourceSets {
-        main {
-            scala {
-                srcDir "src/main/scala"
-            }
-        }
-    }
     buildTypes {
         debug {
             minifyEnabled false

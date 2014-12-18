@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'jp.leafytree.android-scala'
 
 def version = "1.1.0"
-def localReleaseDest = "${buildDir}/release/${version}"
+def localReleaseDest = "${projectDir}/release/${version}"
 
 android {
     compileSdkVersion 21
@@ -54,7 +54,7 @@ uploadArchives {
         pom.artifactId = 'handlerextension'
         pom.version = version
         // Add other pom properties here if you want (developer details / licenses)
-        repository(url: "file://${buildDir}/release/${version}")
+        repository(url: "file://${localReleaseDest}")
     }
 }
 
